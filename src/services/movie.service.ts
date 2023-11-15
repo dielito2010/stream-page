@@ -30,4 +30,30 @@ export async function GetPopularMovies(): Promise<TheMovieDB> {
   return result.data;
 }
 
-// IMPLEMENTE AS DEMAIS FUNÇÕES PARA PEGAR AS DEMAIS CATEGORIAS DE FILMES
+export async function GetAdventureMovies(): Promise<TheMovieDB> {
+  const result = await instance.http.get(
+    `/discover/movie?include_adult=false&include_video=false&language=enUS&page=1&sort_by=popularity.desc&with_genres=12&api_key=${apiKey}`
+  );
+  return result.data;
+}
+
+export async function GetLikedMovies(): Promise<TheMovieDB> {
+  const result = await instance.http.get(
+    `/discover/movie?include_adult=false&include_video=false&language=enUS&page=1&sort_by=popularity.desc&with_genres=35&api_key=${apiKey}`
+  );
+  return result.data;
+}
+
+export async function GetActionMovies(): Promise<TheMovieDB> {
+  const result = await instance.http.get(
+    `/discover/movie?include_adult=false&include_video=false&language=enUS&page=1&sort_by=popularity.desc&with_genres=28&api_key=${apiKey}`
+  );
+  return result.data;
+}
+
+export async function GetRomanceMovies(): Promise<TheMovieDB> {
+  const result = await instance.http.get(
+    `/discover/movie?include_adult=false&include_video=false&language=enUS&page=1&sort_by=popularity.desc&with_genres=10749&api_key=${apiKey}`
+  );
+  return result.data;
+}
