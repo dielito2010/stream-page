@@ -34,5 +34,3 @@ export async function GetMovieDetails(idMovie: number): Promise<MovieDetails> {
   );
   return result.data;
 }
-
-// IMPLEMENTE AS DEMAIS FUNÇÕES PARA PEGAR AS DEMAIS CATEGORIAS DE FILMES

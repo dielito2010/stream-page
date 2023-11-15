@@ -30,6 +30,13 @@ export async function GetPopularMovies(): Promise<TheMovieDB> {
   return result.data;
 }
 
+export async function GetComedyMovies(): Promise<TheMovieDB> {
+  const result = await instance.http.get(
+    `/discover/movie?include_adult=false&include_video=false&language=enUS&page=1&sort_by=popularity.desc&with_genres=35&api_key=${apiKey}`
+  );
+  return result.data;
+}
+
 export async function GetAdventureMovies(): Promise<TheMovieDB> {
   const result = await instance.http.get(
     `/discover/movie?include_adult=false&include_video=false&language=enUS&page=1&sort_by=popularity.desc&with_genres=12&api_key=${apiKey}`
@@ -39,7 +46,7 @@ export async function GetAdventureMovies(): Promise<TheMovieDB> {
 
 export async function GetLikedMovies(): Promise<TheMovieDB> {
   const result = await instance.http.get(
-    `/discover/movie?include_adult=false&include_video=false&language=enUS&page=1&sort_by=popularity.desc&with_genres=35&api_key=${apiKey}`
+    `/movie/top_rated?language=en-US&page=1&api_key=${apiKey}`
   );
   return result.data;
 }
