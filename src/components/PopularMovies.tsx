@@ -1,32 +1,38 @@
 import { useEffect, useState } from "react";
 import { GetPopularMovies, TheMovieDB } from "../services/movie.service";
 import { GetMovieDetails } from "../services/movie.details.service";
+import { MovieDetails } from "../services/movie.details.service";
+import CustomModal from "../utils/customModal";
 
 export default function PopularMovies() {
-  const [popularMovies, SetPopularMovies] = useState<TheMovieDB>();
+  const [popularMovies, setPopularMovies] = useState<TheMovieDB>();
+  const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
+  const [isModalOpen, SetIsModalOpen] = useState(false);
+
 
   useEffect(() => {
     async function fetchData() {
-      const popularMovies = await GetPopularMovies();
-      SetPopularMovies(popularMovies);
+      const movies = await GetPopularMovies();
+      setPopularMovies(movies);
     }
 
     fetchData();
   }, []);
 
-  async function MovieDetails(idMovie: number) {
-    const movieDetail = await GetMovieDetails(idMovie);
-    console.log(movieDetail);
+  async function movieDetails(idMovie: number) {
+    const muvieDetail = await GetMovieDetails(idMovie)
+    setSelectedMovie(muvieDetail);
+    SetIsModalOpen(true)
   }
 
   return (
     <div>
       <h2>Filmes Populares</h2>
-      <div style={{ display: "flex"}}>
+      <div style={{ display: "flex" }}>
         {popularMovies?.results.map((movie) => (
           <div
             key={movie.id}
-            onClick={() => MovieDetails(movie.id)}
+            onClick={() => movieDetails(movie.id)}
             style={{ margin: "10px", textAlign: "center" }}
           >
             <img
@@ -36,20 +42,17 @@ export default function PopularMovies() {
               }`}
               alt={movie.original_title}
             />
-            {/*<p
-              style={{
-                marginTop: "5px",
-                maxWidth: "150px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {movie.original_title}
-            </p>*/}
           </div>
         ))}
       </div>
+      {selectedMovie !== null && (
+        <CustomModal
+          isShow={isModalOpen}
+          movieDetails={selectedMovie}
+          onPlay={() => alert("Play")}
+          onCancel={() => SetIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
