@@ -28,9 +28,12 @@ export default function CustomModal(props: ModalProps) {
     <Modal
       show={props.isShow}
       onHide={props.onCancel}
-      style={{backgroundColor: "black", padding: "2rem"}}
+      className="modal-dialog-scrollable"
+      style={{color:"black"}}
     >
-      <Modal.Header closeButton={true}><h3>{title}</h3></Modal.Header>
+      <Modal.Header closeButton={true}>
+        <Modal.Title><h3 id="staticBackdropLabel">{title}</h3></Modal.Title>
+      </Modal.Header>
       <Modal.Body>
         <img
           src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${poster_path}`}
