@@ -1,55 +1,42 @@
 import { useEffect, useState } from "react";
 import { GetComedyMovies, TheMovieDB } from "../services/movie.service";
 import { GetMovieDetails } from "../services/movie.details.service";
+import { MovieDetails } from "../services/movie.details.service";
+import CustomModal from "../utils/customModal";
+import CarouselSlider from "../utils/customCarouselSlider";
 
 export default function ComedyMovies() {
-  const [comedyMovies, SetComedyMovies] = useState<TheMovieDB>();
+  const [comedyMovies, setComedyMovies] = useState<TheMovieDB>();
+  const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      const comedyMovies = await GetComedyMovies();
-      SetComedyMovies(comedyMovies);
+      const movies = await GetComedyMovies();
+      setComedyMovies(movies);
     }
 
     fetchData();
   }, []);
 
-  async function MovieDetails(idMovie: number) {
+  async function movieDetails(idMovie: number) {
     const movieDetail = await GetMovieDetails(idMovie);
-    console.log(movieDetail);
+    setSelectedMovie(movieDetail);
+    setIsModalOpen(true);
   }
 
   return (
-    <div>
-      <h2>Top Comédias</h2>
-      <div style={{ display: "flex"}}>
-        {comedyMovies?.results.map((movie) => (
-          <div
-            key={movie.id}
-            onClick={() => MovieDetails(movie.id)}
-            style={{ margin: "10px", textAlign: "center" }}
-          >
-            <img
-              style={{ width: "200px" }}
-              src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${
-                movie.poster_path
-              }`}
-              alt={movie.original_title}
-            />
-            {/*<p
-              style={{
-                marginTop: "5px",
-                maxWidth: "150px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {movie.original_title}
-            </p>*/}
-          </div>
-        ))}
-      </div>
+    <div style={{marginTop:"2rem"}}>
+      <h2>Comédia para toda família</h2>
+      <CarouselSlider movies={comedyMovies?.results || []} onMovieClick={movieDetails} />
+      {selectedMovie && (
+        <CustomModal
+          isShow={isModalOpen}
+          movieDetails={selectedMovie}
+          onPlay={() => alert("Play")}
+          onCancel={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

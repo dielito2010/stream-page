@@ -1,55 +1,42 @@
 import { useEffect, useState } from "react";
 import { GetRomanceMovies, TheMovieDB } from "../services/movie.service";
 import { GetMovieDetails } from "../services/movie.details.service";
+import { MovieDetails } from "../services/movie.details.service";
+import CustomModal from "../utils/customModal";
+import CarouselSlider from "../utils/customCarouselSlider";
 
 export default function RomanceMovies() {
-  const [romanceMovies, SetRomanceMovies] = useState<TheMovieDB>();
+  const [romanceMovies, setRomanceMovies] = useState<TheMovieDB>();
+  const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      const romanceMovies = await GetRomanceMovies();
-      SetRomanceMovies(romanceMovies);
+      const movies = await GetRomanceMovies();
+      setRomanceMovies(movies);
     }
 
     fetchData();
   }, []);
 
-  async function MovieDetails(idMovie: number) {
+  async function movieDetails(idMovie: number) {
     const movieDetail = await GetMovieDetails(idMovie);
-    console.log(movieDetail);
+    setSelectedMovie(movieDetail);
+    setIsModalOpen(true);
   }
 
   return (
-    <div>
-      <h2>Filmes de Romance</h2>
-      <div style={{ display: "flex"}}>
-        {romanceMovies?.results.map((movie) => (
-          <div
-            key={movie.id}
-            onClick={() => MovieDetails(movie.id)}
-            style={{ margin: "10px", textAlign: "center" }}
-          >
-            <img
-              style={{ width: "200px" }}
-              src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${
-                movie.poster_path
-              }`}
-              alt={movie.original_title}
-            />
-            {/*<p
-              style={{
-                marginTop: "5px",
-                maxWidth: "150px",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {movie.original_title}
-            </p>*/}
-          </div>
-        ))}
-      </div>
+    <div style={{marginTop:"2rem"}}>
+      <h2>Romances</h2>
+      <CarouselSlider movies={romanceMovies?.results || []} onMovieClick={movieDetails} />
+      {selectedMovie && (
+        <CustomModal
+          isShow={isModalOpen}
+          movieDetails={selectedMovie}
+          onPlay={() => alert("Play")}
+          onCancel={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }
