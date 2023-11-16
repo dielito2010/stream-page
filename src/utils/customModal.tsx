@@ -28,11 +28,14 @@ export default function CustomModal(props: ModalProps) {
     <Modal
       show={props.isShow}
       onHide={props.onCancel}
-      className="modal-dialog-scrollable"
-      style={{color:"black"}}
+      style={{ color: "black" }}
+      backdrop="static"
+      keyboard={false}
     >
       <Modal.Header closeButton={true}>
-        <Modal.Title><h3 id="staticBackdropLabel">{title}</h3></Modal.Title>
+        <Modal.Title>
+          <h3>{title}</h3>
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <img
@@ -51,7 +54,9 @@ export default function CustomModal(props: ModalProps) {
         <p>IMDB: {imdb_id}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onCancel}>Cancelar</Button>
+        <Button variant="secondary" onClick={props.onCancel}>
+          Voltar para lista
+        </Button>
         <Button onClick={props.onPlay}>Play</Button>
       </Modal.Footer>
     </Modal>
