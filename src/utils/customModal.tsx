@@ -22,6 +22,7 @@ export default function CustomModal(props: ModalProps) {
     genres,
     revenue,
     imdb_id,
+    homepage,
   } = props.movieDetails;
 
   return (
@@ -57,7 +58,17 @@ export default function CustomModal(props: ModalProps) {
         <Button variant="secondary" onClick={props.onCancel}>
           Voltar para lista
         </Button>
-        <Button onClick={props.onPlay}>Play</Button>
+        <Button
+          onClick={() => {
+            if (homepage) {
+              window.open(homepage, "_blank");
+            } else {
+              alert("Filme sem site oficial!");
+            }
+          }}
+        >
+          Oficial Play
+        </Button>
       </Modal.Footer>
     </Modal>
   );

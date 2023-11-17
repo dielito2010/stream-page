@@ -33,7 +33,6 @@ export default function RomanceMovies() {
         <CustomModal
           isShow={isModalOpen}
           movieDetails={selectedMovie}
-          onPlay={() => alert("Play")}
           onCancel={() => setIsModalOpen(false)}
         />
       )}
