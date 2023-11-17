@@ -1,9 +1,9 @@
 {
+  "homepage": "https://dielito2010.github.io/stream-page",
   "name": "the_movie",
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://dielito2010.github.io/stream-page",
   "scripts": {
     "build": "cross-env $(cat .env | xargs) vite build",
     "predeploy": "npm run build",
