@@ -1,7 +1,11 @@
 # stream-page
 React application to exemplify the operation of a stream page
 
+#Repository
 [https://github.com/dielito2010/stream-page]
+
+#Video
+[https://drive.google.com/file/d/1TfdSvtjCG_4uMTmL5a7xpoxu7S9Gzq1c/view?usp=sharing]
 
 ```
 git clone
