@@ -1,17 +1,39 @@
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomNavBar() {
+  const navigate = useNavigate();
+
+  const clickHome = () => {
+    navigate("/stream-page/");
+  };
+
+  const clickFavorites = () => {
+    navigate("/stream-page/favoritos");
+  };
+
+  const clickRecommendations = () => {
+    navigate("/stream-page/recomendacoes");
+  };
+
   return (
     <Navbar fixed="top">
       <Container>
-        <Navbar.Brand>Navbar</Navbar.Brand>
-        <Nav.Link href="/">Home</Nav.Link>
-        <Nav.Link href="/stream-page/favoritos">Favoritos</Nav.Link>
-        <Nav.Link href="/stream-page/recomendacoes">Recomendações</Nav.Link>
+        <Navbar.Brand>
+          <img src="/vite.svg" alt="Logo"></img>
+        </Navbar.Brand>
+        <Button onClick={clickHome} variant="outline-secondary">
+          Home
+        </Button>
+        <Button onClick={clickFavorites} variant="outline-secondary">
+          Favoritos
+        </Button>
+        <Button onClick={clickRecommendations} variant="outline-secondary">
+          Recomendações
+        </Button>
         <Form className="d-flex">
           <Form.Control
             type="search"
@@ -19,7 +41,7 @@ export default function CustomNavBar() {
             className="me-2"
             aria-label="Search"
           />
-          <Button variant="outline-success">Pesquisar</Button>
+          <Button variant="outline-secondary">Pesquisar</Button>
         </Form>
       </Container>
     </Navbar>

@@ -3,11 +3,11 @@ import CustomNavBar from "../components/CustomNavBar";
 
 export default function NavBarLayout() {
   return (
-    <header>
-      <div style={{ height: "100vh", width: "100vw" }}>
-        <CustomNavBar />
+      <div>
+        <header>
+          <CustomNavBar />
+        </header>
         <Outlet />
       </div>
-    </header>
   );
 }

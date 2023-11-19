@@ -26,7 +26,7 @@ export default function PopularMovies() {
   }
 
   return (
-    <div>
+    <div style={{marginTop:"3rem"}}>
       <h2>Filmes Populares</h2>
       <CarouselSlider movies={popularMovies?.results || []} onMovieClick={movieDetails} />
       {selectedMovie && (
