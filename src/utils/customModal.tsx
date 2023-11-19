@@ -6,6 +6,7 @@ interface ModalProps {
   movieDetails: MovieDetails;
   onPlay?: () => void;
   onCancel?: () => void;
+  onFavorite?: () => void;
 }
 
 export default function CustomModal(props: ModalProps) {
@@ -29,7 +30,7 @@ export default function CustomModal(props: ModalProps) {
     <Modal
       show={props.isShow}
       onHide={props.onCancel}
-      style={{ color: "black" }}
+      style={{ color: "white" }}
       backdrop="static"
       keyboard={false}
     >
@@ -43,7 +44,7 @@ export default function CustomModal(props: ModalProps) {
           src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${poster_path}`}
           alt={title}
         />
-        <p>Média de avaliações: {vote_average}</p>
+        <p className="mt-5">Média de avaliações: {vote_average}</p>
         <p>Total de avaliações: {vote_count}</p>
         <p>Popularidade: {popularity}</p>
         <p>Descrição: {overview}</p>
@@ -51,12 +52,15 @@ export default function CustomModal(props: ModalProps) {
         <p>Lançamento: {release_date}</p>
         <p>Duração: {runtime} minutos</p>
         <p>Generos: {genres.map((genre: Genre) => genre.name).join(", ")}</p>
-        <p>Receita: {revenue}</p>
+        <p>Receita: ${revenue}</p>
         <p>IMDB: {imdb_id}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={props.onCancel}>
           Voltar para lista
+        </Button>
+        <Button variant="success" onClick={props.onFavorite}>
+          Add aos favoritos
         </Button>
         <Button
           onClick={() => {

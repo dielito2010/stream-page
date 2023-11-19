@@ -29,7 +29,7 @@ export default function CustomNavBar() {
           Home
         </Button>
         <Button onClick={clickFavorites} variant="outline-secondary">
-          Favoritos
+          Seus Favoritos
         </Button>
         <Button onClick={clickRecommendations} variant="outline-secondary">
           Recomendações
