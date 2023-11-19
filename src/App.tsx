@@ -9,7 +9,7 @@ import PopularMovies from "./components/PopularMovies";
 
 function App() {
   return (
-    <main>
+    <main id="main">
       <PopularMovies />
       <LikedMovies />
       <ComedyMovies />

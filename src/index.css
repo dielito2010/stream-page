@@ -70,3 +70,30 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+#app-download-links {
+  display: none;
+}
+
+
+@media screen and (max-width: 768px) {
+  #main {
+    display: none;
+  }
+
+  #app-download-links {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  #app-download-links a {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  img {
+    width: 250px;
+  }
+
+}
