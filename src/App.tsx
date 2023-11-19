@@ -1,23 +1,31 @@
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ActionMovies from "./components/ActionMovies";
-import AdventureMovies from "./components/AdventureMovies";
-import ComedyMovies from "./components/ComedyMovies";
-import LikedMovies from "./components/LikedMovies";
-import RomanceMovies from "./components/RomanceMovies";
-import PopularMovies from "./components/PopularMovies";
+import NavBarLayout from "./layout/NavBar";
+import Home from "./pages/Home";
+import Favorites from "./pages/Favorites";
+import Recommendation from "./pages/Recommendation";
 
-function App() {
-  return (
-    <main id="main">
-      <PopularMovies />
-      <LikedMovies />
-      <ComedyMovies />
-      <ActionMovies />
-      <AdventureMovies />
-      <RomanceMovies />
-    </main>
-  );
+const router = createBrowserRouter([
+  {
+    element: <NavBarLayout />,
+    children: [
+      {
+        path: "/stream-page/",
+        element: <Home />,
+      },
+      {
+        path: "/stream-page/favoritos",
+        element: <Favorites />,
+      },
+      {
+        path: "/stream-page/recomendacoes",
+        element: <Recommendation />,
+      },
+    ],
+  },
+]);
+
+export default function App() {
+  return <RouterProvider router={router} />;
 }
-
-export default App;

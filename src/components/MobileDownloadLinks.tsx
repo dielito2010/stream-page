@@ -6,12 +6,12 @@ export default function MobileDownloadLinks() {
       <a
         href="#"
       >
-        <img src="../../public/google-play.svg" alt="Google Play" />
+        <img src="/google-play.svg" alt="Google Play" />
       </a>
       <a
         href="#"
       >
-        <img src="../../public/store-apple.svg" alt="Apple App Store" />
+        <img src="/store-apple.svg" alt="Apple App Store" />
       </a>
     </div>
   );
