@@ -64,3 +64,10 @@ export async function GetRomanceMovies(): Promise<TheMovieDB> {
   );
   return result.data;
 }
+
+export async function GetRecommendations(idMovie: number): Promise<TheMovieDB> {
+  const result = await instance.http.get(
+    `/movie/${idMovie}/recommendations?language=pt-BR&api_key=${apiKey}`
+  );
+  return result.data;
+}

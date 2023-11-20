@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   GetMovieDetails,
   MovieDetails,
@@ -6,6 +7,8 @@ import localStorageUtils from "../utils/localStorageUtils";
 import { useEffect, useState } from "react";
 
 export default function Favorites() {
+  const navigate = useNavigate();
+
   const [movies, setMovies] = useState<MovieDetails[]>([]);
 
   useEffect(() => {
@@ -17,12 +20,13 @@ export default function Favorites() {
         );
         setMovies(movieDetails);
       } else {
-        alert("Sem filmes favoritos!");
+        alert("Sem filmes favoritos adicionados!");
+        navigate("/stream-page");
       }
     };
 
     fetchFavorites();
-  }, [movies]);
+  }, [movies, navigate]);
 
   return (
     <main>
@@ -41,26 +45,4 @@ export default function Favorites() {
       </div>
     </main>
   );
-}
-
-{
-  /* <Card
-    className="m-2"
-    bg="dark"
-    border="danger"
-    key={movie.id}
-    style={{ flexBasis: "calc(25% - 1rem)", minWidth: "18rem" }}
-    >
-    <Card.Img
-        variant="top"
-        src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${
-        movie.poster_path
-        }`}
-        alt={movie.original_title}
-    />
-    <Card.Footer>
-        <Button variant="danger">Remover dos favoritos</Button>
-        <Button className="mt-2" variant="secondary">Ver detalhes</Button>
-    </Card.Footer>
-</Card> */
 }
