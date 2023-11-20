@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import {
   GetMovieDetails,
   MovieDetails,
@@ -6,30 +6,38 @@ import {
 import localStorageUtils, { MovieObject } from "../utils/localStorageUtils";
 import { useEffect, useState } from "react";
 import CustomModal from "../utils/customModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Favorites() {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [movies, setMovies] = useState<MovieDetails[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
 
   useEffect(() => {
     const fetchFavorites = async () => {
-      const movieObjects = localStorageUtils.get("favoriteIds") || [];
-      if (movieObjects.length > 0) {
-        const movieDetails = await Promise.all(
-          movieObjects.map((movieObject: MovieObject) =>
-            GetMovieDetails(movieObject.id)
-          )
-        );
-        setMovies(movieDetails);
-      } else {
-        navigate("/stream-page");
-        alert("Sem filmes favoritos adicionados!");
+      try {
+        const movieObjects = localStorageUtils.get("favoriteIds") || [];
+        if (movieObjects.length > 0) {
+          const movieDetails = await Promise.all(
+            movieObjects.map((movieObject: MovieObject) =>
+              GetMovieDetails(movieObject.id)
+            )
+          );
+          setMovies(movieDetails);
+        } else {
+          // Se não houver filmes favoritos, mostra o Toast e redireciona para "/stream-page"
+          toast.info("Você não tem filmes favoritos...", {
+            onClose: undefined,//navigate("/stream-page"),
+          });
+        }
+      } catch (error) {
+        console.error("Erro ao carregar filmes favoritos:", error);
       }
     };
 
     fetchFavorites();
-  }, [movies, navigate]);
+  }, []);
 
   const openModal = async (movieId: number) => {
     const details = await GetMovieDetails(movieId);
@@ -67,6 +75,7 @@ export default function Favorites() {
           onCancel={closeModal}
         />
       )}
+      <ToastContainer />
     </main>
   );
 }
