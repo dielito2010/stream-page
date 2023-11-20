@@ -1,5 +1,4 @@
 import { instance } from "../utils/http";
-import { TheMovieDB } from "./movie.service";
 
 export interface MovieDetails {
   backdrop_path: string;
