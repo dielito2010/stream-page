@@ -30,11 +30,12 @@ const CarouselSlider: React.FC<CarouselSliderProps> = ({
           style={{ margin: "10px", textAlign: "center" }}
         >
           <img
-            style={{ width: "200px" }}
-            src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${
-              movie.poster_path
-            }`}
-            alt={movie.original_title}
+            style={{ width: "200px", height: "300px" }}
+            src={
+              movie.poster_path ?
+              `${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${movie.poster_path}` :
+              "/stream-page/vite.svg"
+            }
           />
         </div>
       ))}

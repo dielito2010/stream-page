@@ -32,21 +32,23 @@ export default function CustomModal(props: ModalProps) {
     localStorageUtils.existMovieId(id)
   );
 
-  const handleAddToFavorites = () => {
+  const handleToggleFavorites = () => {
     const favoriteIds = localStorageUtils.get("favoriteIds") || [];
-  
+
     const movieObject = {
       id: id,
       title: title,
     };
-  
-    if (!favoriteIds.some(item => item.id === id)) {
+
+    if (isInFavorites) {
+      localStorageUtils.rmFromFavorites(id);
+    } else {
       favoriteIds.push(movieObject);
       localStorageUtils.set("favoriteIds", favoriteIds);
-      setIsInFavorites(true);
     }
+
+    setIsInFavorites(!isInFavorites);
   };
-  
 
   useEffect(() => {
     setIsInFavorites(localStorageUtils.existMovieId(id));
@@ -66,9 +68,12 @@ export default function CustomModal(props: ModalProps) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <img
-          src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${poster_path}`}
-          alt={title}
+        <img style={{minWidth:"25rem"}}
+          src={
+            poster_path ?
+            `${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${poster_path}` :
+            "/stream-page/vite.svg"
+          }
         />
         <p className="mt-5">Média de avaliações: {vote_average}</p>
         <p>Total de avaliações: {vote_count}</p>
@@ -86,11 +91,10 @@ export default function CustomModal(props: ModalProps) {
           Voltar para lista
         </Button>
         <Button
-          variant="success"
-          onClick={handleAddToFavorites}
-          disabled={isInFavorites}
+          variant={isInFavorites ? "danger" : "success"}
+          onClick={handleToggleFavorites}
         >
-          {isInFavorites ? "Incluído em favoritos" : "Add aos favoritos"}
+          {isInFavorites ? "Remover dos favoritos" : "Add aos favoritos"}
         </Button>
         <Button
           onClick={() => {

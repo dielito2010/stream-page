@@ -1,20 +1,25 @@
+import { useState, useEffect } from "react";
 import FavoritiesByMovieId from "../components/FavoritiesByMovieId";
 import { useNavigate } from "react-router-dom";
-import localStorageUtils from "../utils/localStorageUtils";
+import localStorageUtils, { MovieObject } from "../utils/localStorageUtils";
 
 export default function Recommendation() {
   const navigate = useNavigate();
+  const [movieIds, setMovieIds] = useState<MovieObject[]>([]);
+  useEffect(() => {
+    const storedMovieIds = localStorageUtils.get("favoriteIds");
 
-  const movieIds = localStorageUtils.get("favoriteIds");
-
-  if (!movieIds || movieIds.length === 0) {
-    alert("Sem filmes favoritos adicionados!");
-    navigate("/stream-page");
-  }
+    if (!storedMovieIds || storedMovieIds.length === 0) {
+      navigate("/stream-page");
+      alert("Sem filmes favoritos adicionados!");
+    } else {
+      setMovieIds(storedMovieIds);
+    }
+  }, [navigate]);
 
   return (
     <main>
-      {movieIds!.map((movieId) => (
+      {movieIds.map((movieId) => (
         <FavoritiesByMovieId
           key={movieId.id}
           idMovie={movieId.id}

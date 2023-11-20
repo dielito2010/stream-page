@@ -5,11 +5,12 @@ import {
 } from "../services/movie.details.service";
 import localStorageUtils, { MovieObject } from "../utils/localStorageUtils";
 import { useEffect, useState } from "react";
+import CustomModal from "../utils/customModal";
 
 export default function Favorites() {
   const navigate = useNavigate();
-
   const [movies, setMovies] = useState<MovieDetails[]>([]);
+  const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -22,19 +23,32 @@ export default function Favorites() {
         );
         setMovies(movieDetails);
       } else {
-        alert("Sem filmes favoritos adicionados!");
         navigate("/stream-page");
+        alert("Sem filmes favoritos adicionados!");
       }
     };
 
     fetchFavorites();
-  }, [navigate]);
+  }, [movies, navigate]);
+
+  const openModal = async (movieId: number) => {
+    const details = await GetMovieDetails(movieId);
+    setSelectedMovie(details);
+  };
+
+  const closeModal = () => {
+    setSelectedMovie(null);
+  };
 
   return (
     <main>
       <div className="d-flex flex-wrap mt-5">
         {movies.map((movie) => (
-          <div key={movie.id} className="m-4">
+          <div
+            key={movie.id}
+            className="m-4"
+            onClick={() => openModal(movie.id)}
+          >
             <img
               style={{ flexBasis: "calc(25% - 1rem)", width: "12rem" }}
               src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${
@@ -45,6 +59,13 @@ export default function Favorites() {
           </div>
         ))}
       </div>
+      {selectedMovie && (
+        <CustomModal
+          isShow={selectedMovie !== null}
+          movieDetails={selectedMovie}
+          onCancel={closeModal}
+        />
+      )}
     </main>
   );
 }
