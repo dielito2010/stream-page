@@ -3,7 +3,7 @@ import {
   GetMovieDetails,
   MovieDetails,
 } from "../services/movie.details.service";
-import localStorageUtils from "../utils/localStorageUtils";
+import localStorageUtils, { MovieObject } from "../utils/localStorageUtils";
 import { useEffect, useState } from "react";
 
 export default function Favorites() {
@@ -13,10 +13,12 @@ export default function Favorites() {
 
   useEffect(() => {
     const fetchFavorites = async () => {
-      const movieIds = localStorageUtils.get("favoriteIds");
-      if (movieIds) {
+      const movieObjects = localStorageUtils.get("favoriteIds") || [];
+      if (movieObjects.length > 0) {
         const movieDetails = await Promise.all(
-          movieIds.map((movieId) => GetMovieDetails(Number(movieId)))
+          movieObjects.map((movieObject: MovieObject) =>
+            GetMovieDetails(movieObject.id)
+          )
         );
         setMovies(movieDetails);
       } else {
@@ -26,15 +28,15 @@ export default function Favorites() {
     };
 
     fetchFavorites();
-  }, [movies, navigate]);
+  }, [navigate]);
 
   return (
     <main>
       <div className="d-flex flex-wrap mt-5">
         {movies.map((movie) => (
-          <div key={movie.id} className="m-5">
+          <div key={movie.id} className="m-4">
             <img
-              style={{ flexBasis: "calc(25% - 1rem)", width: "13rem" }}
+              style={{ flexBasis: "calc(25% - 1rem)", width: "12rem" }}
               src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${
                 movie.poster_path
               }`}

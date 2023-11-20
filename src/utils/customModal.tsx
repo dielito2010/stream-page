@@ -34,12 +34,19 @@ export default function CustomModal(props: ModalProps) {
 
   const handleAddToFavorites = () => {
     const favoriteIds = localStorageUtils.get("favoriteIds") || [];
-    if (!favoriteIds.includes(id.toString())) {
-      favoriteIds.push(id.toString());
+  
+    const movieObject = {
+      id: id,
+      title: title,
+    };
+  
+    if (!favoriteIds.some(item => item.id === id)) {
+      favoriteIds.push(movieObject);
       localStorageUtils.set("favoriteIds", favoriteIds);
       setIsInFavorites(true);
     }
   };
+  
 
   useEffect(() => {
     setIsInFavorites(localStorageUtils.existMovieId(id));

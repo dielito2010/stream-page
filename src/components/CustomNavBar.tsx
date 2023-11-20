@@ -29,10 +29,10 @@ export default function CustomNavBar() {
           Home
         </Button>
         <Button onClick={clickFavorites} variant="outline-secondary">
-          Seus Favoritos
+          Seus favoritos
         </Button>
         <Button onClick={clickRecommendations} variant="outline-secondary">
-          Recomendações
+          Nossas recomendações
         </Button>
         <Form className="d-flex">
           <Form.Control

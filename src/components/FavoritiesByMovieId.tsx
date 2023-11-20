@@ -37,7 +37,7 @@ export default function FavoritiesByMovieId({
 
   return (
     <div style={{ marginTop: "3rem" }}>
-      <h2>Porque você favoritou: {nameMovie}</h2>
+      <h2>Porque você favoritou "{nameMovie}"</h2>
       <CarouselSlider
         movies={returnMovies?.results || []}
         onMovieClick={movieDetails}
