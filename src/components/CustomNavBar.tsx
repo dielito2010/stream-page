@@ -23,7 +23,7 @@ export default function CustomNavBar() {
     <Navbar fixed="top">
       <Container>
         <Navbar.Brand>
-          <img src="/vite.svg" alt="Logo"></img>
+          <img src="/stream-page/vite.svg" alt="Logo"></img>
         </Navbar.Brand>
         <Button onClick={clickHome} variant="outline-secondary">
           Home
