@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 interface ModalProps {
   isShow: boolean;
   movieDetails: MovieDetails;
-  isFavorite: boolean;
   onPlay?: () => void;
   onCancel?: () => void;
 }

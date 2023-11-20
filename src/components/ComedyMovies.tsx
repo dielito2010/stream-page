@@ -27,7 +27,7 @@ export default function ComedyMovies() {
 
   return (
     <div style={{marginTop:"2rem"}}>
-      <h2>Comédia para toda família</h2>
+      <h2>Comédias para toda família</h2>
       <CarouselSlider movies={comedyMovies?.results || []} onMovieClick={movieDetails} />
       {selectedMovie && (
         <CustomModal
