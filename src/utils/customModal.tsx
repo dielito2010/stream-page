@@ -1,16 +1,19 @@
 import { Modal, Button } from "react-bootstrap";
 import { MovieDetails, Genre } from "../services/movie.details.service";
+import localStorageUtils from "./localStorageUtils";
+import { useState, useEffect } from "react";
 
 interface ModalProps {
   isShow: boolean;
   movieDetails: MovieDetails;
+  isFavorite: boolean;
   onPlay?: () => void;
   onCancel?: () => void;
-  onFavorite?: () => void;
 }
 
 export default function CustomModal(props: ModalProps) {
   const {
+    id,
     title,
     poster_path,
     vote_average,
@@ -25,6 +28,23 @@ export default function CustomModal(props: ModalProps) {
     imdb_id,
     homepage,
   } = props.movieDetails;
+
+  const [isInFavorites, setIsInFavorites] = useState(
+    localStorageUtils.existMovieId(id)
+  );
+
+  const handleAddToFavorites = () => {
+    const favoriteIds = localStorageUtils.get("favoriteIds") || [];
+    if (!favoriteIds.includes(id.toString())) {
+      favoriteIds.push(id.toString());
+      localStorageUtils.set("favoriteIds", favoriteIds);
+      setIsInFavorites(true);
+    }
+  };
+
+  useEffect(() => {
+    setIsInFavorites(localStorageUtils.existMovieId(id));
+  }, [id]);
 
   return (
     <Modal
@@ -59,8 +79,12 @@ export default function CustomModal(props: ModalProps) {
         <Button variant="secondary" onClick={props.onCancel}>
           Voltar para lista
         </Button>
-        <Button variant="success" onClick={props.onFavorite}>
-          Add aos favoritos
+        <Button
+          variant="success"
+          onClick={handleAddToFavorites}
+          disabled={isInFavorites}
+        >
+          {isInFavorites ? "Incluído em favoritos" : "Add aos favoritos"}
         </Button>
         <Button
           onClick={() => {

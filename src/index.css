@@ -63,7 +63,11 @@ button:focus-visible {
 }
 
 .modal-content {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.btn-close {
+  background-color: white;
 }
 
 @media (prefers-color-scheme: light) {
@@ -82,7 +86,6 @@ button:focus-visible {
 #app-download-links {
   display: none;
 }
-
 
 @media screen and (max-width: 768px) {
   main {
@@ -107,5 +110,4 @@ button:focus-visible {
   img {
     width: 250px;
   }
-
 }
