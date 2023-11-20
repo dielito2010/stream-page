@@ -1,4 +1,3 @@
-//import { useNavigate } from "react-router-dom";
 import {
   GetMovieDetails,
   MovieDetails,
@@ -10,7 +9,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Favorites() {
-  //const navigate = useNavigate();
   const [movies, setMovies] = useState<MovieDetails[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<MovieDetails | null>(null);
 
@@ -26,9 +24,8 @@ export default function Favorites() {
           );
           setMovies(movieDetails);
         } else {
-          // Se não houver filmes favoritos, mostra o Toast e redireciona para "/stream-page"
           toast.info("Você não tem filmes favoritos...", {
-            onClose: undefined,//navigate("/stream-page"),
+            onClose: undefined,
           });
         }
       } catch (error) {
