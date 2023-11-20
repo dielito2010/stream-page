@@ -50,6 +50,7 @@ export default function Favorites() {
             onClick={() => openModal(movie.id)}
           >
             <img
+              className="img"
               style={{ flexBasis: "calc(25% - 1rem)", width: "12rem" }}
               src={`${import.meta.env.VITE_APP_BASE_URL_IMAGEM}/${
                 movie.poster_path
