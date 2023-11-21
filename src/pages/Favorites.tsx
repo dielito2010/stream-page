@@ -6,7 +6,6 @@ import localStorageUtils, { MovieObject } from "../utils/localStorageUtils";
 import { useEffect, useState } from "react";
 import CustomModal from "../utils/customModal";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function Favorites() {
   const [movies, setMovies] = useState<MovieDetails[]>([]);
@@ -15,18 +14,19 @@ export default function Favorites() {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        const movieObjects = localStorageUtils.get("favoriteIds") || [];
-        if (movieObjects.length > 0) {
+        const movieObjects = localStorageUtils.get("favoriteIds");
+
+        if (!movieObjects || movieObjects.length === 0) {
+          toast.info("Você não tem filmes favoritos...", {
+            onClose: undefined,
+          });
+        } else {
           const movieDetails = await Promise.all(
             movieObjects.map((movieObject: MovieObject) =>
               GetMovieDetails(movieObject.id)
             )
           );
           setMovies(movieDetails);
-        } else {
-          toast.info("Você não tem filmes favoritos...", {
-            onClose: undefined,
-          });
         }
       } catch (error) {
         console.error("Erro ao carregar filmes favoritos:", error);
@@ -34,7 +34,7 @@ export default function Favorites() {
     };
 
     fetchFavorites();
-  }, []);
+  }, [movies]);
 
   const openModal = async (movieId: number) => {
     const details = await GetMovieDetails(movieId);

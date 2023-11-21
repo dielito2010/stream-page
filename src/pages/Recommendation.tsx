@@ -2,18 +2,20 @@ import { useState, useEffect } from "react";
 import FavoritiesByMovieId from "../components/FavoritiesByMovieId";
 import { useNavigate } from "react-router-dom";
 import localStorageUtils, { MovieObject } from "../utils/localStorageUtils";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Recommendation() {
   const navigate = useNavigate();
   const [movieIds, setMovieIds] = useState<MovieObject[]>([]);
   useEffect(() => {
-    const storedMovieIds = localStorageUtils.get("favoriteIds");
+    const movieObjects = localStorageUtils.get("favoriteIds");
 
-    if (!storedMovieIds || storedMovieIds.length === 0) {
-      navigate("/stream-page");
-      alert("Sem filmes favoritos adicionados!");
+    if (!movieObjects || movieObjects.length === 0) {
+      toast.info("Você não tem filmes favoritos...", {
+        onClose: undefined,
+      });
     } else {
-      setMovieIds(storedMovieIds);
+      setMovieIds(movieObjects);
     }
   }, [navigate]);
 
@@ -26,6 +28,7 @@ export default function Recommendation() {
           nameMovie={movieId.title}
         />
       ))}
+     <ToastContainer />
     </main>
   );
 }
